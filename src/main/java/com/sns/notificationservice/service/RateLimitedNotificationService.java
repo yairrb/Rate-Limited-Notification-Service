@@ -60,7 +60,7 @@ public class RateLimitedNotificationService implements NotificationService {
 
             }
 
-        }else{
+        } else {
 
             logger.warn(String.format("About to send a notification without a predefined topic. topic = %s recipient=%s", notification.getTopic()
                     , notification.getRecipient()));
@@ -88,6 +88,4 @@ public class RateLimitedNotificationService implements NotificationService {
         return Notification.builder().topic(dto.getTopic()).message(dto.getMessage()).recipient(dto.getRecipient()).timestamp(LocalDateTime.now()).status(NotificationStatus.PENDING).build();
     }
 
-    public void throwException(Class<LimitReachedException> limitReachedExceptionClass) {
-    }
 }

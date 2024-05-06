@@ -2,7 +2,6 @@ package com.sns.notificationservice.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.stereotype.Service;
 
 @Entity
 @Table(name = "ratelimit")

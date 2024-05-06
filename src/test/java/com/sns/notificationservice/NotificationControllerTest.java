@@ -34,7 +34,6 @@ public class NotificationControllerTest {
         controller.sendNotification(notificationDTO);
 
         verify(rateLimitedService).sendNotification(notificationDTO);
-        verify(rateLimitedService, never()).throwException(LimitReachedException.class); // Shouldn't throw exception
         assertEquals(ResponseEntity.ok().build(), controller.sendNotification(notificationDTO));
     }
 
