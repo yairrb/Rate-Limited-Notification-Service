@@ -49,13 +49,13 @@ public class RateLimitedNotificationService implements NotificationService {
                     , startTime);
 
             if (notifications.size() < ratelimit.getLimit()) {
+                notification.setStatus(NotificationStatus.SENT);
                 send(notification);
             } else {
 
                 logger.warn(String.format("Rate limited reached... Saving notification with Topic=%s and Recipient=%s", notification.getTopic()
                         , notification.getRecipient()));
-                //save the notification for later
-                this.notificationRepository.save(notification);
+                notification.setStatus(NotificationStatus.PENDING);
                 throw new LimitReachedException("Limit rate reached. Notification will be saved for later.");
 
             }
@@ -64,9 +64,12 @@ public class RateLimitedNotificationService implements NotificationService {
 
             logger.warn(String.format("About to send a notification without a predefined topic. topic = %s recipient=%s", notification.getTopic()
                     , notification.getRecipient()));
+            notification.setStatus(NotificationStatus.SENT);
             send(notification);
         }
 
+        //save the notification for later
+        this.notificationRepository.save(notification);
 
     }
 
